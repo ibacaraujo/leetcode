@@ -1,0 +1,28 @@
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val, next, random):
+        self.val = val
+        self.next = next
+        self.random = random
+"""
+class Solution(object):
+    def __init__(self):
+        self.visited = {}
+        
+    def copyRandomList(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        d1 = d2 = head
+        while d1:
+            node = Node(d1.val, None, None)
+            self.visited[d1] = node
+            d1 = d1.next
+        while d2:
+            node = self.visited.get(d2, None)
+            node.next = self.visited.get(d2.next, None)
+            node.random = self.visited.get(d2.random, None)
+            d2 = d2.next
+        return self.visited.get(head)
